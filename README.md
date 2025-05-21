@@ -131,3 +131,5 @@ This setup includes recommended configurations to streamline the development pro
 ### 7.1 Fastlane
 - `fastlane` is used for deployment automation.
 
+# Dev tips
+https://codewithandrea.com/articles/vscode-shortcuts-extensions-settings-flutter-development/
