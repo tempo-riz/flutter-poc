@@ -1,7 +1,12 @@
 # Flutter POC
 
+# Create your projet
+
+```bash <(curl -s https://raw.githubusercontent.com/tempo-riz/flutter-poc/main/create.sh)```
+
 ## Table of Contents
 - [Flutter POC](#flutter-poc)
+- [Create your projet](#create-your-projet)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. Project Setup](#2-project-setup)
@@ -25,6 +30,7 @@
     - [6.1 Recommended VSCode Extensions](#61-recommended-vscode-extensions)
   - [7. Deployment](#7-deployment)
     - [7.1 Fastlane](#71-fastlane)
+- [Dev tips](#dev-tips)
 
 ## 1. Introduction
 This project provides a quick and efficient setup for a **Flutter Proof of Concept (PoC)** with essential features, including navigation, state management, localization, Firebase, and GitHub feedback integration.
