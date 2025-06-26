@@ -8,9 +8,9 @@ if [[ ! "$APP_NAME" =~ ^[a-z_][a-z0-9_]*$ ]]; then
     exit 1
 fi
 
-read -p "Enter your organization (e.g., com.example): " ORG
+read -p "Enter your organization (e.g., com.example) your full package name will be com.example.appname: " ORG
 if [[ ! "$ORG" =~ ^([a-z]+(\.[a-z0-9]+)+)$ ]]; then
-    echo "Invalid organization. Use a domain-style name (e.g., com.example)."
+    echo "Invalid organization. Use a domain-style name (e.g., com.example)"
     exit 1
 fi
 
