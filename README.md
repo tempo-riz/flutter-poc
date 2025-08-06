@@ -4,9 +4,30 @@
 
 ```bash <(curl -s https://raw.githubusercontent.com/tempo-riz/flutter-poc/main/create.sh)```
 
+### Dependencies
+
+```yaml
+flutter pub add \
+  flutter_riverpod \
+  riverpod_annotation \
+  go_router \
+  http \
+  flutter_dotenv \
+  loading_animation_widget \
+  flutter_svg && \
+  
+flutter pub add --dev \
+  build_runner \
+  custom_lint \
+  riverpod_lint \
+  riverpod_generator \
+  flutter_gen_runner
+```
+
 ## Table of Contents
 - [Flutter POC](#flutter-poc)
 - [Create your projet](#create-your-projet)
+    - [Dependencies](#dependencies)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. Project Setup](#2-project-setup)
