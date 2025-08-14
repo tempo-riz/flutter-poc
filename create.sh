@@ -2,18 +2,21 @@
 
 echo "Welcome to Flutter POC!"
 
+# name
 read -p "Enter the name of your Flutter app: " APP_NAME
 if [[ ! "$APP_NAME" =~ ^[a-z_][a-z0-9_]*$ ]]; then
     echo "Invalid app name. Use only lowercase letters, numbers, and underscores."
     exit 1
 fi
 
-read -p "Enter your organization (e.g., com.example) your full package name will be com.example.appname: " ORG
+# org
+read -p "Enter your organization (e.g., com.example) your full package name will be com.example.$APP_NAME: " ORG
 if [[ ! "$ORG" =~ ^([a-z]+(\.[a-z0-9]+)+)$ ]]; then
     echo "Invalid organization. Use a domain-style name (e.g., com.example)"
     exit 1
 fi
 
+# platform
 echo "Select platforms (space-separated):"
 echo "1) Android"
 echo "2) iOS"
@@ -46,6 +49,7 @@ else
     )"
 fi
 
+# inplace
 read -p "Create the Flutter app in the current directory? (y/n): " INPLACE
 
 if [[ "$INPLACE" =~ ^[Yy]$ ]]; then
@@ -60,6 +64,58 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Install dependencies
+echo "Adding dependencies..."
+flutter pub add \
+  flutter_riverpod \
+  riverpod_annotation \
+  go_router \
+  http \
+  flutter_dotenv \
+  loading_animation_widget \
+  flutter_svg
+
+flutter pub add --dev \
+  build_runner \
+  custom_lint \
+  riverpod_lint \
+  riverpod_generator \
+  flutter_gen_runner
+
+if [ $? -ne 0 ]; then
+    echo "Failed to install dependencies."
+    exit 1
+fi
+
+echo "Scaffolding Flutter app..."
+# Replace lib folder with your POC lib
+TMP_DIR=$(mktemp -d)
+git clone --depth 1 https://github.com/tempo-riz/flutter-poc.git "$TMP_DIR"
+POC_LIB_PATH="$TMP_DIR/poc/lib"
+
+if [ -d "$POC_LIB_PATH" ]; then
+    echo "Replacing lib folder with POC lib..."
+    rm -rf lib
+    cp -R "$POC_LIB_PATH" ./lib
+else
+    echo "POC lib folder not found in cloned repo."
+    exit 1
+fi
+
+# Cleanup temp clone
+rm -rf "$TMP_DIR"
+
+# update imports paths
+find lib -type f -name "*.dart" -exec sed -i '' "s/package:poc/package:$APP_NAME/g" {} +
+
+# remove test folder since its not relevant yet
+rm -rf test
+
+# go to root if not in place
+if [[ "$INPLACE" =~ ^[Yy]$ ]]; then
+    cd ..
+fi
+
 read -p "Initialize Git repository? (y/n): " INIT_GIT
 if [[ "$INIT_GIT" =~ ^[Yy]$ ]]; then
     git init
@@ -67,5 +123,6 @@ if [[ "$INIT_GIT" =~ ^[Yy]$ ]]; then
     git commit -m "Initial commit"
     echo "Git repository initialized."
 fi
+
 
 echo "Flutter app '$APP_NAME' created successfully!"
